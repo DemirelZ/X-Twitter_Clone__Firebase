@@ -1,29 +1,26 @@
-import { useEffect, useState } from 'react';
-import Form from './Form';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase/config';
-import Loader from './Post/Loader';
-import Post from './Post';
+import { useEffect, useState } from "react";
+import Form from "./Form";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/config";
+import Loader from "./Post/Loader";
+import Post from "./Post";
 
 const Main = ({ user }) => {
-  const tweetsCol = collection(db, 'tweets');
+  const tweetsCol = collection(db, "tweets");
   const [tweets, setTweets] = useState(null);
-
 
   useEffect(() => {
     onSnapshot(tweetsCol, (snapshot) => {
       const tempTweets = [];
 
-      snapshot.forEach((doc) =>
-        tempTweets.push({ id: doc.id, ...doc.data() })
-      );
+      snapshot.forEach((doc) => tempTweets.push({ id: doc.id, ...doc.data() }));
 
       setTweets(tempTweets);
     });
   }, []);
 
-  console.log("user", user)
-  console.log("tweets", tweets)
+  //   console.log("user", user)
+  //   console.log("tweets", tweets)
 
   return (
     <main className="border border-gray-700 overflow-y-auto">
